@@ -1,0 +1,86 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lirafuchs</title><meta name="robots" content="noindex,nofollow"><meta name="description" content="Lirafuchs – billig Gamerscore jagen">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#107c10"><link rel="icon" href="icon192.png">
+<link rel="apple-touch-icon" href="icon180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<style>
+:root{--bg:#EEF0EC;--card:#fff;--fg:#13201a;--mut:#4a5a50;--line:#c9d1c9;--acc:#107C10;--err:#b3261e;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0b120c;--card:#132016;--fg:#e8f3e8;--mut:#a9c0ab;--line:#3b5a3e;--acc:#2f9e38;--err:#ff8a7a;color-scheme:dark}}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 "Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;display:grid;place-items:center;padding:16px}
+.box{width:100%;max-width:380px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 22px;box-shadow:0 12px 40px #0002}
+.logo{display:flex;align-items:center;gap:12px;margin-bottom:4px}.logo b{font-size:24px;font-weight:800;letter-spacing:-.01em}
+.logo svg{border-radius:12px;flex:none}
+p{color:var(--mut);margin:0 0 18px;font-size:15px}
+.pw{position:relative}.pw input{width:100%;min-height:48px;padding:12px 96px 12px 14px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--fg);font-size:16px}
+.pw button{position:absolute;right:2px;top:2px;min-height:44px;min-width:44px;padding:0 12px;background:transparent;color:var(--acc);border:0;font-weight:600;font-size:14px;cursor:pointer}
+input:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+label.r{display:flex;gap:10px;align-items:center;margin:10px 0 14px;color:var(--mut);font-size:15px;min-height:44px;cursor:pointer}
+label.r input{width:20px;height:20px;accent-color:var(--acc)}
+.go{width:100%;min-height:48px;border:0;border-radius:999px;background:var(--acc);color:#fff;font-weight:700;font-size:16px;cursor:pointer}
+.go:disabled{opacity:.65}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:14px;visibility:hidden}.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .2s}
+.bar.on{visibility:visible}.e{min-height:22px;font-size:14px;margin-top:8px;color:var(--mut)}.e.err{color:var(--err)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style></head><body>
+<form class="box" id="f" autocomplete="off">
+<div class="logo"><svg viewBox="0 0 128 128" width="40" height="40" aria-hidden="true"><rect x="4" y="4" width="120" height="120" rx="28" fill="#0F1F17"/><path d="M24 30 L46 52 L64 46 L82 52 L104 30 L98 70 L64 106 L30 70 Z" fill="#F08A3C"/><path d="M30 70 L64 82 L98 70 L64 106 Z" fill="#FFF3E6"/><path d="M24 30 L46 52 L36 58 Z M104 30 L82 52 L92 58 Z" fill="#B85A1E"/><circle cx="50" cy="66" r="5" fill="#0F1F17"/><circle cx="78" cy="66" r="5" fill="#0F1F17"/><path d="M60 94 h8 l-4 5 z" fill="#0F1F17"/><circle cx="100" cy="100" r="18" fill="#4CCB4C" stroke="#0F1F17" stroke-width="4"/><path d="M97 88 V110 Q110 110 111 98 M90 101 L106 94 M90 107 L106 100" fill="none" stroke="#0F1F17" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Lirafuchs</b></div>
+<p>Billig Gamerscore jagen. Gib dein Passwort ein – die Daten werden erst hier auf deinem Gerät entschlüsselt.</p>
+<div class="pw"><input id="pw" type="password" placeholder="Passwort" aria-label="Passwort" autocomplete="current-password" autofocus><button type="button" id="sh" aria-pressed="false">Zeigen</button></div>
+<label class="r"><input id="rem" type="checkbox" checked> Auf diesem Gerät merken</label>
+<button class="go" id="b">Öffnen</button>
+<div class="bar" id="bar" aria-hidden="true"><i id="bi"></i></div><div class="e" id="e" role="status" aria-live="polite"></div></form>
+<script>
+(()=>{   // gekapselt: nach document.write darf kein Name der Sperrseite (P, $, …) mit der App kollidieren
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+const P={"salt": "/+1U0FE2q6wiCBwNyET7jA==", "it": 600000, "z": 1};   // {salt, it, z} – der verschlüsselte Inhalt liegt getrennt in data.bin
+const IT=P.it;
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const $=id=>document.getElementById(id),f=$('f'),e=$('e'),bt=$('b'),bar=$('bar'),bi=$('bi');
+const msg=(t,err)=>{e.textContent=t;e.classList.toggle('err',!!err);};
+const prog=v=>{bar.classList.add('on');bi.style.width=Math.max(4,Math.min(100,v))+'%';};
+$('sh').addEventListener('click',()=>{const i=$('pw'),on=i.type==='password';i.type=on?'text':'password';$('sh').textContent=on?'Verbergen':'Zeigen';$('sh').setAttribute('aria-pressed',String(on));});
+// data.bin sofort laden (aus dem Service-Worker-Cache meist in Millisekunden), mit Fortschritt
+const BIN=(async()=>{
+  const r=await fetch('data.bin');if(!r.ok)throw new Error('http '+r.status);
+  window.__LF_BIN=(r.headers.get('etag')||'')+'|'+(r.headers.get('last-modified')||'')+'|'+(r.headers.get('content-length')||'');   // welcher Stand geöffnet wurde (99z_d11_auto vergleicht mit dem Cache)
+  const n=+r.headers.get('content-length')||0;if(!r.body||!n)return new Uint8Array(await r.arrayBuffer());
+  const rd=r.body.getReader(),out=new Uint8Array(n);let o=0;
+  for(;;){const {done,value}=await rd.read();if(done)break;if(o+value.length>n)return new Uint8Array(await new Blob([out.slice(0,o),value]).arrayBuffer());out.set(value,o);o+=value.length;prog(o/n*80);}
+  if(o<n)throw new Error('kurz');   // abgebrochener Download: als Netzfehler melden, gemerkten Schlüssel NICHT löschen (Kritik D12)
+  return out;
+})();
+BIN.catch(()=>{});
+// "Merken": NICHT das Passwort speichern, sondern den abgeleiteten AES-Schlüssel als nicht-exportierbaren CryptoKey in IndexedDB.
+// Der Salt bleibt über Deploys gleich, darum passt der Schlüssel auch nach Updates. #logout vergisst ihn.
+const DBN='sh_keys',ST='k',KID='page';
+const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open(DBN,1);r.onupgradeneeded=()=>r.result.createObjectStore(ST);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});
+const kop=(mode,fn)=>idb().then(db=>new Promise((res,rej)=>{const tx=db.transaction(ST,mode);const q=fn(tx.objectStore(ST));tx.oncomplete=()=>res(q&&q.result);tx.onerror=()=>rej(tx.error);}));
+const kget=()=>kop('readonly',s=>s.get(KID)),kput=v=>kop('readwrite',s=>s.put(v,KID)),kdel=()=>kop('readwrite',s=>s.delete(KID));
+async function derive(pw){
+  const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(P.salt),iterations:IT,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
+}
+class NetErr extends Error{}
+async function dec(k){
+  let b;try{b=await BIN;}catch(x){throw new NetErr('net');}
+  if(b.length<16||b[0]!==76||b[1]!==70||b[2]!==49)throw new NetErr('fmt');
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b.slice(3,15)},k,b.slice(15));prog(90);
+  if(!P.z)return new TextDecoder().decode(pt);
+  return await new Response(new Blob([pt]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+}
+function show(html){prog(100);document.open();document.write(html);document.close();}
+async function remember(k){try{await kput({k,salt:P.salt,it:IT});}catch(x){}}
+const netMsg=x=>msg(x.message==='fmt'?'Die gespeicherten Daten sind beschädigt – bitte mit Internet neu öffnen.':'Keine Verbindung und noch nichts auf diesem Gerät gespeichert. Bitte einmal mit Internet öffnen.',true);
+f.addEventListener('submit',async ev=>{ev.preventDefault();bt.disabled=true;msg('Wird geöffnet …');const pw=$('pw').value;
+  let k,html;try{k=await derive(pw);html=await dec(k);}catch(x){bt.disabled=false;bar.classList.remove('on');if(x instanceof NetErr)netMsg(x);else msg('Falsches Passwort.',true);return;}
+  if($('rem').checked)await remember(k);
+  show(html);});
+(async()=>{
+  try{localStorage.removeItem('sh_pw');}catch(x){}   // alte Klartext-Speicherung entfernen
+  if(location.hash==='#logout'){try{await kdel();}catch(x){}history.replaceState(null,'',location.pathname);return;}
+  try{
+    const s=await kget();
+    if(s&&s.k&&s.salt===P.salt&&s.it===IT){msg('Wird geöffnet …');try{show(await dec(s.k));return;}catch(x){if(x instanceof NetErr){netMsg(x);return;}await kdel().catch(()=>{});msg('');bar.classList.remove('on');}}
+  }catch(x){}
+})();
+})();
+</script></body></html>

@@ -1,0 +1,108 @@
+{
+ "id": "./",
+ "name": "Lirafuchs",
+ "short_name": "Lirafuchs",
+ "description": "Billig Gamerscore jagen: günstige Xbox-Spiele, Gift-Card-Listen, Jagdplan.",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "categories": [
+  "games",
+  "shopping",
+  "utilities"
+ ],
+ "background_color": "#EEF0EC",
+ "theme_color": "#107c10",
+ "lang": "de",
+ "dir": "ltr",
+ "launch_handler": {
+  "client_mode": "navigate-existing"
+ },
+ "shortcuts": [
+  {
+   "name": "Heute",
+   "short_name": "Heute",
+   "description": "Was spiele ich heute?",
+   "url": "./#tonight",
+   "icons": [
+    {
+     "src": "icon192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Was kaufen?",
+   "short_name": "Was kaufen?",
+   "description": "Vorschlag für deine Gift Cards",
+   "url": "./#p=assistent",
+   "icons": [
+    {
+     "src": "icon192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Mein Korb",
+   "short_name": "Mein Korb",
+   "description": "Handy-Kaufmodus mit deinem Korb",
+   "url": "./#p=handy",
+   "icons": [
+    {
+     "src": "icon192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Zusammen",
+   "short_name": "Zusammen",
+   "description": "Mit Freunden kaufen",
+   "url": "./#p=zusammen",
+   "icons": [
+    {
+     "src": "icon192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  }
+ ],
+ "share_target": {
+  "action": "./",
+  "method": "GET",
+  "params": {
+   "title": "title",
+   "text": "text",
+   "url": "url"
+  }
+ },
+ "icons": [
+  {
+   "src": "icon180.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  },
+  {
+   "src": "icon192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icon512m.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
